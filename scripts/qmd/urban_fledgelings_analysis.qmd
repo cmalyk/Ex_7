@@ -128,11 +128,22 @@ anova(mod.03, mod.04, test = "Chisq")
 ## validate preferred model
 
 ```{r}
+#| label: model_diagnostics
+#| include: false
 
 sim <- simulateResiduals(mod.03)
 plot(sim)
 ```
 
+```{r}
+#| label: model_summary
+
+summary(mod.03)
+
+```
+
 ## interpret and report findings
+
+Each 1 dB increase in noise corresponds to `r round(100 * abs(1 - exp(-0.00427)), 1)` % fewer fledglings (estimate = `r round(mod.03$coefficients[2],3)` , p = `r round(summary(mod.03)$coefficients[2,4],3)`). Each 1 g/m^2^ increase in insect biomass is associated with `r round(100 * abs(1 - exp(mod.03$coefficients[3])), 1)` % more fledglings (estimate = `r round(mod.03$coefficients[3],3)` , p = `r round(summary(mod.03)$coefficients[3,4],3)`).
 
 ## store session information
