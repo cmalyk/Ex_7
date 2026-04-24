@@ -18,16 +18,16 @@ execute:
   message: false # true = print messages in rendered html file
 ---
 
-## prepare the session, import and wrangle the data 
+## prepare the session, import and wrangle the data
 
 ```{r}
-#| label: empty environment
+#| label: empty-environment
 
 rm(list= ls())
 ```
 
 ```{r}
-#| label: import libraries
+#| label: import-libraries
 
 #| echo: false
 
@@ -42,16 +42,24 @@ library(ggeffects) # needed for predict_response
 library(knitr) # -> to make nice tables
 ```
 
+```{r}
+#| label: import-data
+
+data <- read.csv("C:/Users/Clint/OneDrive - Universität Zürich UZH/Desktop/Ex7_folders/data/processed/clean.csv", stringsAsFactors = T, sep = ";") #-> converts "chr" to "factor" directly
+
+
+```
+
 ## explore the data
 
-### numerically 
+### numerically
 
-### graphically 
+### graphically
 
-## fit candidate models & select preferred one (hint: outcome is a count -\> Poisson GLM) 
+## fit candidate models & select preferred one (hint: outcome is a count -\> Poisson GLM)
 
-## validate preferred model 
+## validate preferred model
 
-## interpret and report findings 
+## interpret and report findings
 
 ## store session information
