@@ -1,0 +1,57 @@
+---
+title: "Urban_Fledgelings_Analysis"
+author: "Clint Malyk"
+date: today
+format: 
+  html:
+    embed-resources: true # get only a single html file and not an html in asupporting directory
+    number-sections: true
+editor: visual # opens qmd file in visual editor by default
+editor_options: 
+  chunk_output_type: console # output of code chunks goes to the console
+
+# set document-wide code-chunk execution options:
+execute:
+  echo: true # true = print code-chunk in rendered html file
+  warning: false # true = print warning messages in rendered html file after running code chunk
+  error: false # true = print error messages in rendered html file after running code chunk
+  message: false # true = print messages in rendered html file
+---
+
+## prepare the session, import and wrangle the data 
+
+```{r}
+#| label: empty environment
+
+rm(list= ls())
+```
+
+```{r}
+#| label: import libraries
+
+#| echo: false
+
+library(ggplot2) 
+library(GGally) 
+library(car) 
+library(performance) 
+library(tidyverse) 
+library(pastecs)
+library(DHARMa) 
+library(ggeffects) # needed for predict_response
+library(knitr) # -> to make nice tables
+```
+
+## explore the data
+
+### numerically 
+
+### graphically 
+
+## fit candidate models & select preferred one (hint: outcome is a count -\> Poisson GLM) 
+
+## validate preferred model 
+
+## interpret and report findings 
+
+## store session information
