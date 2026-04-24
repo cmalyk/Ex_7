@@ -2,6 +2,8 @@
 title: "Urban_Fledgelings_Analysis"
 author: "Clint Malyk"
 date: today
+abstract-title: "Research question"
+abstract: "How do environmental stresses and resource availability influence reproductive success?"
 format: 
   html:
     embed-resources: true # get only a single html file and not an html in asupporting directory
@@ -54,7 +56,43 @@ data <- read.csv("C:/Users/Clint/OneDrive - Universität Zürich UZH/Desktop/Ex7
 
 ### numerically
 
+```{r}
+#| label: tbl-descriptive-statistics
+#| tbl-cap: "Descriptive statistics of data in ssoup_new dataframe."
+
+knitr::kable(round(stat.desc(data, norm= T), 3)) # stat.desc creates descriptive stats 
+```
+
+In @tbl-descriptive-statistics we see that the P-value of the Shapiro-Wilk test for the outcome variable is \< 0.05, indicating that the outcome variable isn't normally distributed. Furthermore, the outcome is count data, so we need a poisson GLM to model the data.
+
 ### graphically
+
+```{r}
+#| label: fig-successes-histogram
+#| fig-cap: "Histogram of the number of observed immune reactions per batch."
+
+ggplot(data, aes(number_of_fledglings)) +
+  geom_histogram(bins = 10) 
+# data is right-skewed
+```
+
+```{r}
+#| label: fig-fledglings-against-env
+
+ggplot(data, aes(environmental_noise_dB, number_of_fledglings)) +
+  geom_point() +
+  geom_smooth(method = "glm" , method.args = list(fam = poisson)) +
+  labs(x = "Environmental Noise (dB)", y = "Number of Fledglings")
+```
+
+```{r}
+#| label: fig-fledglings-against-resources
+
+ggplot(data, aes(Insect.Abundance_g.m2, number_of_fledglings)) +
+  geom_point() +
+  geom_smooth(method = "glm" , method.args = list(fam = poisson)) +
+  labs(x = "Insect Abundance (g/m\u00B2)", y = "Number of Fledglings")
+```
 
 ## fit candidate models & select preferred one (hint: outcome is a count -\> Poisson GLM)
 
