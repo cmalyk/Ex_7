@@ -58,7 +58,7 @@ data <- read.csv("C:/Users/Clint/OneDrive - Universität Zürich UZH/Desktop/Ex7
 
 ```{r}
 #| label: tbl-descriptive-statistics
-#| tbl-cap: "Descriptive statistics of data in ssoup_new dataframe."
+#| tbl-cap: "Descriptive statistics of data in data dataframe."
 
 knitr::kable(round(stat.desc(data, norm= T), 3)) # stat.desc creates descriptive stats 
 ```
@@ -96,7 +96,42 @@ ggplot(data, aes(Insect.Abundance_g.m2, number_of_fledglings)) +
 
 ## fit candidate models & select preferred one (hint: outcome is a count -\> Poisson GLM)
 
+```{r}
+#| label: candidate_models
+
+mod.00<- glm(number_of_fledglings ~ 1, data, family = poisson(link = log))
+mod.01<- glm(number_of_fledglings~ environmental_noise_dB, data, family = poisson(link = log))
+mod.02<- glm(number_of_fledglings~ Insect.Abundance_g.m2, data, family = poisson(link = log))
+mod.03<- glm(number_of_fledglings~ environmental_noise_dB + Insect.Abundance_g.m2, data, family = poisson(link = log))
+mod.04<- glm(number_of_fledglings~ environmental_noise_dB * Insect.Abundance_g.m2, data, family = poisson(link = log))
+
+```
+
+```{r}
+#| label: compare_AICs
+
+AIC(mod.00,mod.01,mod.02,mod.03,mod.04)
+
+# select mod.03 & mod.04 based on AIC
+
+```
+
+```{r}
+#| label: check_interaction_term
+
+anova(mod.03, mod.04, test = "Chisq")
+
+# the P-value of the Chisq test is > 0.05 -> interaction term not significant
+
+```
+
 ## validate preferred model
+
+```{r}
+
+sim <- simulateResiduals(mod.03)
+plot(sim)
+```
 
 ## interpret and report findings
 
